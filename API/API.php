@@ -36,7 +36,9 @@ class API {
 
 	public function login($username, $password) {
 		$url     = "https://api.disney.com/clubpenguin/mobile/v2/authToken?appId=CPMCAPP&appVersion=1.4&language=en";
-		$headers = array('Authorization: Basic ' . base64_encode($username . ":" . $password) . "," . $this->api);
+		$headers = array(
+			'Authorization: Basic ' . base64_encode($username . ":" . $password) . "," . $this->api,
+			'User Agent: Club%20Penguin/15420 CFNetwork/711.4.6 Darwin/14.0.0');
 		$data    		= $this->getData(array("url" => $url, "httpheader" => $headers));
 		$arrData 		= json_decode($data, true);
 		$this->username = $username;
@@ -60,7 +62,7 @@ class API {
 			"Connection: keep-alive",
 			"Accept: */*",
 			"Accept-Language: en-us",
-			"User-Agent: Club%20Penguin/1.4.12376 CFNetwork/672.1.13 Darwin/14.0.0 Paros/3.2.13",
+			"User-Agent: Club%20Penguin/15420 CFNetwork/711.4.6 Darwin/14.0.0",
 			"Authorization: Basic " . $strAuth
 		);
 		$data 	 = $this->getData(array("url" => $url, "customrequest" => "PUT", "postfields" => $strCoins, "httpheader" => $headers));
@@ -73,7 +75,7 @@ class API {
 
 	public function addItem($item) {
 		$url     = "https://api.disney.com/clubpenguin/mobile/v2/purchase?catalogId=500435792&itemType=paper_item&itemId=" . $item;
-		$data    = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array('Authorization: Basic ' . base64_encode($this->authToken . ":") . "," . $this->api)));
+		$data    = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array('Authorization: Basic ' . base64_encode($this->authToken . ":") . "," . $this->api, 'User Agent: Club%20Penguin/15420 CFNetwork/711.4.6 Darwin/14.0.0')));
 		$arrData = json_decode($data, true);
 		if(empty($arrData['errorResponse']))
 			$this->console->fine("Successfully added item {$item} to {$this->username}");
@@ -83,7 +85,7 @@ class API {
 
 	public function addIgloo($id) {
 		$url  	 = "https://api.disney.com/clubpenguin/mobile/v2/purchase?catalogId=400846864&itemType=igloo&itemId=" . $id;
-		$data 	 = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api)));
+		$data 	 = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api, "User Agent: Club%20Penguin/15420 CFNetwork/711.4.6 Darwin/14.0.0")));
 		$arrData = json_decode($data, true);
 		if(empty($arrData['errorResponse']))
 			$this->console->fine("Addded igloo {$id} to {$this->username}");
@@ -93,7 +95,7 @@ class API {
 
 	public function addIglooLocation($id) {
 		$url  	 = "https://api.disney.com/clubpenguin/mobile/v2/purchase?catalogId=400846864&itemType=igloo&itemId=" . $id;
-		$data 	 = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api)));
+		$data 	 = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api, "User Agent: Club%20Penguin/15420 CFNetwork/711.4.6 Darwin/14.0.0")));
 		$arrData = json_decode($data, true);
 		if(empty($arrData['errorResponse']))
 			$this->console->fine("Added igloo location {$id} to {$this->username}");
@@ -103,7 +105,7 @@ class API {
 
 	public function addFloor($id) {
 		$url  	 = "https://api.disney.com/clubpenguin/mobile/v2/purchase?catalogId=400846864&itemType=igloo_floor&itemId=" . $id;
-		$data 	 = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api)));
+		$data 	 = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api, "User Agent: Club%20Penguin/15420 CFNetwork/711.4.6 Darwin/14.0.0")));
 		$arrData = json_decode($data, true);
 		if(empty($arrData['errorResponse']))
 			$this->console->fine("Added floor {$id} to {$this->username}");
@@ -116,7 +118,7 @@ class API {
 		$url = "https://api.disney.com/clubpenguin/mobile/v2/purchase?catalogId=500435792&itemType=furniture_item&itemId=" . $id;
 		for($i = 0; $i < $amount; $i++) {
 			$count++;
-			$data    = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api)));
+			$data    = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api, "User Agent: Club%20Penguin/15420 CFNetwork/711.4.6 Darwin/14.0.0")));
 			$arrData = json_decode($data, true);
 			if(empty($arrData['errorResponse']))
 				$this->console->fine("Added 1 furniture item of ID {$id}. Total: {$count}");
@@ -127,7 +129,7 @@ class API {
 
 	public function addPuffleItem($id) {
 		$url  	 = "http://api.disney.com/clubpenguin/mobile/v2/purchase?catalogId=500435792&itemType=puffle_item&itemId=" . $id;
-		$data 	 = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api)));
+		$data 	 = $this->getData(array("url" => $url, "post" => true, "postfields" => "{}", "httpheader" => array("Authorization: Basic " . base64_encode($this->authToken . ":") . "," . $this->api, "User Agent: Club%20Penguin/15420 CFNetwork/711.4.6 Darwin/14.0.0")));
 		$arrData = json_decode($data, true);
 		if(empty($arrData['errorResponse']))
 			$this->console->fine("Added puffle item {$id} to {$this->username}");
@@ -144,7 +146,7 @@ class API {
 			'Connection: keep-alive',
 			'Accept: */*',
 			'Accept-Language: en-us',
-			'User-Agent: Club%20Penguin/1.4.12376 CFNetwork/672.1.13 Darwin/14.0.0 Paros/3.2.13',
+			'User-Agent: Club%20Penguin/15420 CFNetwork/711.4.6 Darwin/14.0.0',
 			'Authorization: ' . $this->api
 		);
 		$strCreate = utf8_encode('{"password":"' . $password . '","username":"' . $username . '","language":1,"email":"' . $email . '","color":"' . $colour . '","daysAsMember":16}');
